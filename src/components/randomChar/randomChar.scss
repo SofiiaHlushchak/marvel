@@ -1,0 +1,65 @@
+@import "../../style/variables";
+
+.randomchar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 5px 5px 20px 0px #00000040;
+    &__block {
+        padding: 40px 35px;
+        display: flex;
+        img {
+            width: 180px;
+            height: 190px;
+        }
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: 30px;
+    }
+
+    &__name {
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    &__descr {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.41px;
+    }
+
+    &_btns {
+        a:not(:last-child) {
+            margin-right: 30px;
+        }
+    }
+
+    &__static {
+        background-color: $dark;
+        padding: 40px 35px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        button {
+            margin-top: 13px;
+        }
+    }
+
+    &__title {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 28.13px;
+    }
+
+    &__decoration {
+        position: absolute;
+        bottom: 14px;
+        right: -37px;
+    }
+}
