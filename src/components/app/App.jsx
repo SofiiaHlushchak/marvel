@@ -11,15 +11,11 @@ const App = () => {
         <div className="app">
             <AppHeader />
             <main>
-                <AppBanner />
-                {/* <RandomChar />
+                <RandomChar />
                 <div className="char__content">
                     <CharList />
-                    <Skeleton />
                     <CharInfo />
-                </div> */}
-
-                <ComicsList />
+                </div>
             </main>
         </div>
     );
