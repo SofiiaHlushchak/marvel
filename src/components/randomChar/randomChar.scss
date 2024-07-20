@@ -8,12 +8,16 @@
     &__block {
         padding: 40px 35px;
         display: flex;
-        img {
-            width: 180px;
-            height: 190px;
+    }
+    &__image {
+        width: 180px;
+        height: 190px;
+        object-fit: cover;
+
+        &_fill {
+            object-fit: fill;
         }
     }
-
     &__info {
         display: flex;
         flex-direction: column;
