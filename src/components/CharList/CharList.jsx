@@ -6,6 +6,10 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./charList.scss";
 
 class CharList extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     state = {
         charList: [],
         loading: true,
@@ -41,7 +45,11 @@ class CharList extends Component {
                 : "char__image";
 
             return (
-                <li key={item.id} className="char__item">
+                <li
+                    onClick={() => this.props.onSelectedChar(item.id)}
+                    key={item.id}
+                    className="char__item"
+                >
                     <img
                         src={item.thumbnail}
                         alt={item.name}
