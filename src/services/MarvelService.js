@@ -1,6 +1,8 @@
 class MarvelService {
     _apiBase = process.env.REACT_APP_API_BASE;
     _apiKey = process.env.REACT_APP_API_KEY;
+    _baseOffset = 210;
+    _baseLimit = 9;
 
     getResource = async (url) => {
         let res = await fetch(url);
@@ -12,9 +14,9 @@ class MarvelService {
         return await res.json();
     };
 
-    getAllCharacters = async () => {
+    getAllCharacters = async (offset = this._baseOffset) => {
         const res = await this.getResource(
-            `${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`
+            `${this._apiBase}characters?limit=${this._baseLimit}&offset=${offset}&${this._apiKey}`
         );
 
         return res.data.results.map(this._transformCharacter);
