@@ -21,4 +21,10 @@
         color: black;
         transform: translateY(-5px);
     }
+    &:disabled {
+        cursor: not-allowed;
+        filter: grayscale(0.9);
+        transform: translateY(0px);
+        color: white;
+    }
 }
