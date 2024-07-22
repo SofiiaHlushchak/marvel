@@ -6,10 +6,6 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./charList.scss";
 
 class CharList extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         charList: [],
         loading: true,
