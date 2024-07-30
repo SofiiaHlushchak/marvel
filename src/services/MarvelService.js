@@ -14,6 +14,14 @@ const useMarvelService = () => {
         return res.data.results.map(_transformCharacter);
     };
 
+    const getAllComics = async (offset = _baseOffset) => {
+        const res = await request(
+            `${_apiBase}comics?limit=8&offset=${offset}&${_apiKey}`
+        );
+
+        return res.data.results.map(_transformComics);
+    };
+
     const getCharacter = async (id) => {
         const res = await request(`${_apiBase}characters/${id}?${_apiKey}`);
         return _transformCharacter(res.data.results[0]);
@@ -33,12 +41,25 @@ const useMarvelService = () => {
         };
     };
 
+    const _transformComics = (comic) => {
+        return {
+            id: comic.id,
+            title: comic.title,
+            price: comic.prices[0].price,
+            description: comic.description
+                ? `${comic.description.slice(0, 210)}...`
+                : "There is no description for this comic",
+            thumbnail: comic.thumbnail.path + "." + comic.thumbnail.extension,
+        };
+    };
+
     return {
         loading,
         error,
         clearError,
         getAllCharacters,
         getCharacter,
+        getAllComics,
     };
 };
 
