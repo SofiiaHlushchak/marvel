@@ -5,13 +5,13 @@ import RandomChar from "../randomChar/RandomChar";
 import CharList from "../CharList/CharList";
 import CharInfo from "../CharInfo/CharInfo";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
-
+import ComicsList from "../ComicsList/ComicsList";
 const App = () => {
-    const [selectedChar, setSelectedChar] = useState(null);
+    // const [selectedChar, setSelectedChar] = useState(null);
 
-    const onSelectedChar = (id) => {
-        setSelectedChar(id);
-    };
+    // const onSelectedChar = (id) => {
+    //     setSelectedChar(id);
+    // };
     return (
         <div className="app">
             <AppHeader />
@@ -20,13 +20,16 @@ const App = () => {
                     <RandomChar />
                 </ErrorBoundary>
                 <div className="char__content">
-                    <ErrorBoundary>
+                    {/* <ErrorBoundary>
                         <CharList onSelectedChar={onSelectedChar} />
                     </ErrorBoundary>
                     <ErrorBoundary>
                         <CharInfo charId={selectedChar} />
-                    </ErrorBoundary>
+                    </ErrorBoundary> */}
                 </div>
+                <ErrorBoundary>
+                    <ComicsList />
+                </ErrorBoundary>
             </main>
         </div>
     );
