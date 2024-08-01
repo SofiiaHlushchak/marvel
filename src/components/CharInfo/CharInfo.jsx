@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import useMarvelService from "../../services/MarvelService";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
@@ -73,7 +74,7 @@ const View = ({ char }) => {
                     if (i > 9) return;
                     return (
                         <li key={i} className="char__comics-item">
-                            <a href={item.resourceURI}>{item.name}</a>
+                            <Link to={item.resourceURI.match(/v1\/public\/(.+)/)[1]} >{item.name}</Link>
                         </li>
                     );
                 })}
