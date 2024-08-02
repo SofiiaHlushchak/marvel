@@ -8,9 +8,6 @@ import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 const MainPage = () => {
     const [selectedChar, setSelectedChar] = useState(null);
 
-    const onSelectedChar = (id) => {
-        setSelectedChar(id);
-    };
     return (
         <>
             <ErrorBoundary>
@@ -18,10 +15,10 @@ const MainPage = () => {
             </ErrorBoundary>
             <div className="char__content">
                 <ErrorBoundary>
-                    <CharList onSelectedChar={onSelectedChar} />
+                    <CharList onSelectedChar={setSelectedChar} activeItem={selectedChar} />
                 </ErrorBoundary>
                 <ErrorBoundary>
-                    <CharInfo charId={selectedChar} />
+                    <CharInfo char={selectedChar} />
                 </ErrorBoundary>
             </div>
         </>

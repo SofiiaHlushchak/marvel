@@ -11,7 +11,6 @@ const CharList = (props) => {
     const [newItemLoading, setNewItemLoading] = useState(false);
     const [offset, setOffset] = useState(210);
     const [charEnded, setCharEnded] = useState(false);
-    const [activeItemId, setActiveItemId] = useState(null);
 
     const { loading, error, getAllCharacters } = useMarvelService();
 
@@ -31,6 +30,10 @@ const CharList = (props) => {
             ended = true;
         }
 
+        if (!charList.length) {
+            props.onSelectedChar(newCharList[0]);
+        }
+
         setCharList((charList) => [...charList, ...newCharList]);
         setNewItemLoading(false);
         setOffset((offset) => offset + 9);
@@ -43,8 +46,7 @@ const CharList = (props) => {
             event.key === "Enter" ||
             event.key === " "
         ) {
-            setActiveItemId(item.id);
-            props.onSelectedChar(item.id);
+            props.onSelectedChar(item);
         }
     };
 
@@ -76,7 +78,7 @@ const CharList = (props) => {
             );
         });
     };
-    const items = renderItems(charList, activeItemId);
+    const items = renderItems(charList, props.activeItem?.id);
     const spinner = loading && !newItemLoading ? <Spinner /> : null;
     const errorMessage = error ? <ErrorMessage /> : null;
     return (

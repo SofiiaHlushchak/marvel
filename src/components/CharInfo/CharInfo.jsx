@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import useMarvelService from "../../services/MarvelService";
-import Spinner from "../spinner/Spinner";
-import ErrorMessage from "../errorMessage/ErrorMessage";
 import Skeleton from "../Skeleton/Skeleton";
 
 import "./charInfo.scss";
@@ -10,37 +7,18 @@ import "./charInfo.scss";
 const CharInfo = (props) => {
     const [char, setChar] = useState(null);
 
-    const { loading, error, clearError, getCharacter } = useMarvelService();
-
     useEffect(() => {
-        updateChar();
-    }, [props.charId]);
+        updateChar(props.char);
+    }, [props.char]);
 
-    const updateChar = () => {
-        const { charId } = props;
-        if (!charId) {
-            return;
-        }
-
-        clearError();
-        getCharacter(charId).then(onCharLoaded);
-    };
-
-    const onCharLoaded = (char) => {
+    const updateChar = (char) => {
         setChar(char);
     };
 
-    const skeleton = char || loading || error ? null : <Skeleton />;
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const spinner = loading ? <Spinner /> : null;
-    const content = !(loading || error || !char) ? <View char={char} /> : null;
-
     return (
         <div className="char__info">
-            {skeleton}
-            {errorMessage}
-            {spinner}
-            {content}
+            {!char && <Skeleton />}
+            {char && <View char={char} />}
         </div>
     );
 };
@@ -74,7 +52,15 @@ const View = ({ char }) => {
                     if (i > 9) return;
                     return (
                         <li key={i} className="char__comics-item">
-                            <Link to={item.resourceURI.match(/v1\/public\/(.+)/)[1]} >{item.name}</Link>
+                            <Link
+                                to={
+                                    item.resourceURI.match(
+                                        /v1\/public\/(.+)/
+                                    )[1]
+                                }
+                            >
+                                {item.name}
+                            </Link>
                         </li>
                     );
                 })}
