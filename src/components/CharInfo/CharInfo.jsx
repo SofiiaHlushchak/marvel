@@ -41,7 +41,11 @@ const View = ({ char }) => {
                     </div>
                 </div>
             </div>
-            <div className="char__descr">{description}</div>
+            <div className="char__descr">
+                {description.length > 210
+                    ? `${description.slice(0, 210)}...`
+                    : description}
+            </div>
             <div className="char__comics">Comics:</div>
             <ul className="char__comics-list">
                 {comics.length > 0

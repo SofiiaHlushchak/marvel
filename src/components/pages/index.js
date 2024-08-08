@@ -1,6 +1,8 @@
 import ComicsPage from "./ComicsPage";
 import MainPage from "./MainPage";
 import Page404 from "./404";
-import SingleComicPage from "./SingleComicPage/SingleComicPage";
+import SingleComicLayout from "./singleComicLayout/singleComicLayout";
+import SingleCharacterLayout from "./singleCharacterLayout/SingleCharacterLayout";
+import SinglePage from "./SinglePage";
 
-export { MainPage, ComicsPage, Page404, SingleComicPage };
+export { MainPage, ComicsPage, Page404, SingleComicLayout, SingleCharacterLayout, SinglePage };
