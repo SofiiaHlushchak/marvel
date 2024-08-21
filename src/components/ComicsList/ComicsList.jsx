@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useMarvelService from "../../services/MarvelService";
-import Spinner from "../spinner/Spinner";
-import ErrorMessage from "../errorMessage/ErrorMessage";
-
+import setContentList from "../../utils/setContentList";
 import "./comicsList.scss";
 
 const ComicsList = () => {
@@ -12,7 +10,8 @@ const ComicsList = () => {
     const [offset, setOffset] = useState(210);
     const [comicEnded, setComicEnded] = useState(false);
 
-    const { loading, error, getAllComics } = useMarvelService();
+    const { getAllComics, status, setStatus } =
+        useMarvelService();
 
     useEffect(() => {
         onRequest(offset, true);
@@ -21,7 +20,9 @@ const ComicsList = () => {
     const onRequest = (offset, initial) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true);
 
-        getAllComics(offset).then(onComicListLoaded);
+        getAllComics(offset)
+            .then(onComicListLoaded)
+            .then(() => setStatus("confirmed"));
     };
 
     const onComicListLoaded = (newComicList) => {
@@ -37,7 +38,7 @@ const ComicsList = () => {
     };
 
     const renderItems = (comicList) => {
-        return comicList.map((comic) => {
+        const items = comicList.map((comic) => {
             const imgClass = comic.thumbnail.includes("image_not_available.jpg")
                 ? "comics__item-img comics__item-img_fill"
                 : "comics__item-img";
@@ -55,17 +56,17 @@ const ComicsList = () => {
                 </li>
             );
         });
-    };
 
-    const items = renderItems(comicList);
-    const spinner = loading && !newItemLoading ? <Spinner /> : null;
-    const errorMessage = error ? <ErrorMessage /> : null;
+        return <ul className="comics__grid">{items}</ul>;
+    };
 
     return (
         <div className="comics__list">
-            {spinner}
-            {errorMessage}
-            <ul className="comics__grid">{items}</ul>
+            {setContentList(
+                status,
+                () => renderItems(comicList),
+                newItemLoading
+            )}
             <button
                 className="button button__main button__long"
                 disabled={newItemLoading}
