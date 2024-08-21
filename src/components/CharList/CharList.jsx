@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import useMarvelService from "../../services/MarvelService";
-import Spinner from "../spinner/Spinner";
-import ErrorMessage from "../errorMessage/ErrorMessage";
+import setContentList from "../../utils/setContentList";
 
 import "./charList.scss";
 
@@ -12,7 +11,8 @@ const CharList = (props) => {
     const [offset, setOffset] = useState(210);
     const [charEnded, setCharEnded] = useState(false);
 
-    const { loading, error, getAllCharacters } = useMarvelService();
+    const { getAllCharacters, status, setStatus } =
+        useMarvelService();
 
     useEffect(() => {
         onRequest(offset, true);
@@ -21,7 +21,9 @@ const CharList = (props) => {
     const onRequest = (offset, initial) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true);
 
-        getAllCharacters(offset).then(onCharListLoaded);
+        getAllCharacters(offset)
+            .then(onCharListLoaded)
+            .then(() => setStatus("confirmed"));
     };
 
     const onCharListLoaded = (newCharList) => {
@@ -51,7 +53,7 @@ const CharList = (props) => {
     };
 
     const renderItems = (charList, activeItemId) => {
-        return charList.map((item) => {
+        const items = charList.map((item) => {
             const imgClass = item.thumbnail.includes("image_not_available.jpg")
                 ? "char__image char__image_fill"
                 : "char__image";
@@ -77,15 +79,17 @@ const CharList = (props) => {
                 </li>
             );
         });
+
+        return <ul className="char__grid">{items}</ul>;
     };
-    const items = renderItems(charList, props.activeItem?.id);
-    const spinner = loading && !newItemLoading ? <Spinner /> : null;
-    const errorMessage = error ? <ErrorMessage /> : null;
+
     return (
         <div className="char__list">
-            {spinner}
-            {errorMessage}
-            <ul className="char__grid">{items}</ul>
+            {setContentList(
+                status,
+                () => renderItems(charList, props.activeItem?.id),
+                newItemLoading
+            )}
             <button
                 className="button button__main button__long"
                 disabled={newItemLoading}

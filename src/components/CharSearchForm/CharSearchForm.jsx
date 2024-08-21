@@ -15,20 +15,20 @@ import "./charSearchForm.scss";
 
 const CharSearchForm = () => {
     const [char, setChar] = useState(null);
-    const { loading, error, clearError, getCharacterByName } =
+    const { clearError, getCharacterByName, status, setStatus } =
         useMarvelService();
 
     const updateChar = (charName) => {
         clearError();
 
-        getCharacterByName(charName).then(onCharLoaded);
+        getCharacterByName(charName).then(onCharLoaded).then(() => setStatus('confirmed'));
     };
 
     const onCharLoaded = (char) => {
         setChar(char);
     };
 
-    const errorMessage = error ? (
+    const errorMessage = status === "error" ? (
         <div className="char__search-critical-error">
             <ErrorMessage />
         </div>
@@ -75,7 +75,7 @@ const CharSearchForm = () => {
                         <button
                             type="submit"
                             className="button button__main"
-                            disabled={loading}
+                            disabled={status === "loading"}
                         >
                             <div className="inner">find</div>
                         </button>
